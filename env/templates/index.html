@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Index</title>
+    <style>
+        h1 {
+           text-align: center;
+        }
+        #links{
+           text-align: center;
+        }
+        #links a{
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+<h1>Welcome to our first app!</h1>
+<div id = "links">
+    <a href="/view" >View Name</a>
+    <a href="/add">Add Name</a>
+</div>
+<div id = "names">
+    <h2>List of Names</h2>
+    <ul>
+    {%for name in names%}
+        <li>{{name}}</li>
+    {% endfor %}
+    </ul>
+</div>
+</body>
+</html>
