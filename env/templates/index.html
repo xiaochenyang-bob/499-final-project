@@ -18,14 +18,16 @@
 <body>
 <h1>Welcome to our first app!</h1>
 <div id = "links">
-    <a href="/view" >View Name</a>
+    <a href="/" >View Name</a>
     <a href="/add">Add Name</a>
 </div>
 <div id = "names">
     <h2>List of Names</h2>
     <ul>
-    {%for name in names%}
-        <li>{{name}}</li>
+    {%for person in people%}
+        <a href="/personView?fullname={{person.firstname + '_' + person.lastname}}">
+            <li>{{person.firstname}} {{person.lastname}}</li>
+        </a>
     {% endfor %}
     </ul>
 </div>

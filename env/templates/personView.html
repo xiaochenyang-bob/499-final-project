@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PersonView</title>
+    <style>
+        h1{
+            text-align: center;
+        }
+        ul{
+            text-align: center;
+            list-style: inside;
+        }
+    </style>
+</head>
+<body>
+<a href="/">Back to Home</a>
+<h1>{{person.firstname}} {{person.lastname}}</h1>
+<p>Born on: {{person.birthday}}</p>
+<p>Born in the country: {{person.country}}</p>
+<h1>Some facts about {{person.country}}</h1>
+<div id = "flag">
+    {%if countryInfo == None %}
+        <img src="https://www.countryflags.io/us/flat/64.png">
+    {% else %}
+        <img src="https://www.countryflags.io/{{countryInfo['alpha2Code']}}/flat/64.png">
+    {% endif %}
+</div>
+
+<div id = "info">
+<ul>
+    {%if countryInfo == None %}
+        <li>Resides in the continent of unknown continent</li>
+        <li>Capital city is: unknown capital</li>
+        <li>Population is: 0</li>
+    {% else %}
+        <li>Resides in the continent of {{countryInfo["region"]}}</li>
+        <li>Capital city is: {{countryInfo["capital"]}}</li>
+        <li>Population is: {{countryInfo["population"]}}</li>
+    {% endif %}
+</ul>
+</div>
+</body>
+</html>

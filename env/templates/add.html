@@ -22,12 +22,18 @@
 <body>
 <h1>Welcome to our first app!</h1>
 <div id = "links">
-    <a href="/view" >View Name</a>
+    <a href="/" >View Name</a>
     <a href="/add">Add Name</a>
 </div>
 <form action = "{{ url_for('index') }}" method = "get">
-    <label for="newname">Add a Name</label><br>
-    <input type="text" id="newname" name="newname"><br>
+    <label for="firstname">First name:</label>
+    <input type="text" id="firstname" name="firstname"><br>
+    <label for="lastname">Last name:</label>
+    <input type="text" id="lastname" name="lastname"><br>
+    <label for="birthday">Birthday:</label>
+    <input type="date" id="birthday" name="birthday"><br>
+    <label for="country">Country:</label>
+    <input type="text" id="country" name="country"><br>
     <input type="submit" value="Sumbit">
 </form>
 </body>
