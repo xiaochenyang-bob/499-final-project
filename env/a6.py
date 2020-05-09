@@ -1,7 +1,8 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect,session
 import requests
 import json
 import pymysql
+
 
 class People:
     def __init__(self,firstname, lastname, birthday, country):
@@ -15,14 +16,14 @@ app = Flask(__name__)
 # connect to database
 db = pymysql.connect("localhost","root","11433020Abc","TESTDB" )
 cursor = db.cursor()
-cursor.execute("DROP TABLE IF EXISTS PEOPLE")
-sql = """CREATE TABLE PEOPLE (
-   FIRST_NAME  CHAR(20) NOT NULL,
-   LAST_NAME  CHAR(20) NOT NULL,
-   BIRTHDAY DATE,  
-   COUNTRY CHAR(20)
-   )"""
-cursor.execute(sql);
+# cursor.execute("DROP TABLE IF EXISTS PEOPLE")
+# sql = """CREATE TABLE PEOPLE (
+#    FIRST_NAME  CHAR(20) NOT NULL,
+#    LAST_NAME  CHAR(20) NOT NULL,
+#    BIRTHDAY DATE,
+#    COUNTRY CHAR(20)
+#    )"""
+# cursor.execute(sql);
 
 
 @app.route("/")
@@ -40,10 +41,7 @@ def index():
             cursor.execute(sql)
             db.commit()
         except:
-            # Rollback in case there is any error
             db.rollback()
-        # person = People(firstname, lastname, birthday, country)
-        # people.append(person)
     sql = "SELECT * FROM PEOPLE"
     cursor.execute(sql)
     results = cursor.fetchall()
@@ -57,13 +55,15 @@ def index():
         people.append(person)
     return render_template("index.html", people=people )
 
-@app.route("/add")
+@app.route("/addform")
 def add():
     return render_template("add.html")
 
 @app.route("/personView")
 def detail():
     fullname = request.args.get("fullname")
+    if '_' not in fullname:
+        return render_template("errorPage.html")
     names = fullname.split('_')
     firstname = names[0]
     lastname = names[1]
@@ -92,16 +92,6 @@ def detail():
         return render_template("personView.html", person=selectPerson, countryInfo=info[0])
     else:
         return render_template("personView.html", person=selectPerson, countryInfo=None)
-    # for person in people:
-    #     if firstname == person.firstname:
-    #         selectPerson = person
-    #         countryInfo = requests.get('https://restcountries.eu/rest/v2/name/' + selectPerson.country)
-    #         if countryInfo.status_code == 200:
-    #             info = countryInfo.json()
-    #             return render_template("personView.html", person = selectPerson, countryInfo = info[0])
-    #         else:
-    #             return render_template("personView.html", person = selectPerson, countryInfo = None)
-    #return render_template("index.html", people=people)
 
 if __name__ == "__main__":
     app.run(debug=True)
